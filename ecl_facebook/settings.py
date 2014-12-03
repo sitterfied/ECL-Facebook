@@ -1,6 +1,6 @@
 try:
     from django.conf import settings
-    from django.core.exceptions import ImproperlyConfigured:
+    from django.core.exceptions import ImproperlyConfigured
     dir(settings)
 except (ImproperlyConfigured, ImportError):
     import os
