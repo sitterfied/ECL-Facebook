@@ -1,8 +1,8 @@
 try:
-    from django.conf import settings
     from django.core.exceptions import ImproperlyConfigured
+    from django.conf import settings
     dir(settings)
-except (ImproperlyConfigured, ImportError):
+except (ImportError, ImproperlyConfigured):
     import os
     class settings(object):
         FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')
