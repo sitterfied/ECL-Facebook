@@ -1,15 +1,21 @@
 try:
-    from django.core.exceptions import ImproperlyConfigured
     from django.conf import settings
-    dir(settings)
-except (ImportError, ImproperlyConfigured):
-    import os
-    class settings(object):
-        FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')
-        FACEBOOK_SECRET = os.environ.get('FACEBOOK_SECRET')
-        FACEBOOK_REDIRECT_URL = os.environ.get('FACEBOOK_REDIRECT_URL')
-        FACEBOOK_SCOPE = os.environ.get('FACEBOOK_SCOPE')
-        FACEBOOK_CSRF_TOKEN_REQUIRED = os.environ.get('FACEBOOK_CSRF_TOKEN_REQUIRED') == '1'
+    from django.core.exceptions import ImproperlyConfigured
+    settings_imported = False
+except ImportError:
+    settings_imported = True
+
+if settings_imported:
+    try:
+        dir(settings)
+    except ImproperlyConfigured:
+        import os
+        class settings(object):
+            FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')
+            FACEBOOK_SECRET = os.environ.get('FACEBOOK_SECRET')
+            FACEBOOK_REDIRECT_URL = os.environ.get('FACEBOOK_REDIRECT_URL')
+            FACEBOOK_SCOPE = os.environ.get('FACEBOOK_SCOPE')
+            FACEBOOK_CSRF_TOKEN_REQUIRED = os.environ.get('FACEBOOK_CSRF_TOKEN_REQUIRED') == '1'
 
 import warnings
 import urllib
